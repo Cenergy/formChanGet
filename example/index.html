@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Example of Remember jQuery plugin</title>
+	<title>表单变化检测</title>
 	<script type="text/javascript" src="jquery-1.3.2.js"></script>
 	<script type="text/javascript" src="../remember/jquery.remember.js"></script>
 </head>
@@ -30,8 +30,8 @@
 			</p>
 
 			<p>
-				<input type="radio" name="radio1" id="radio1a" value="this" /> <label for="radio1a">This</label>
-				<input type="radio" name="radio2" id="radio1b" value="that" /> <label for="radio1b">Or that</label>
+				<input type="radio" name="radio1" id="radio1a" value="this" title="123"/> <label for="radio1a">This</label>
+				<input type="radio" name="radio1" id="radio1b" value="that" title="234"/> <label for="radio1b">Or that</label>
 			</p>
 
 			<p>
@@ -71,7 +71,11 @@
 				var changesObj = {}
 				if(all_forms.remember('hasChanges')){
 					$.each(all_forms.remember('changes'), function (index, item) {
-					changesObj[item.name] = $("input[name='"+item.name+"']").val()
+						if(($("input[name='" + item.name + "']").attr('type'))==="radio"){
+                        changesObj[item.name] = $("input[name='" + item.name + "']:checked").attr('title');
+                    }else{
+                        changesObj[item.name] = $("input[name='" + item.name + "']").val();
+                    }
 					});
 					console.log(changesObj);
 				}else{
